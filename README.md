@@ -1,57 +1,85 @@
-# CSV Anonymizer
+# Fixed-Width File Parser
 
-## Description
+This project contains a Python solution for parsing a fixed-width file using a JSON specification and converting it into a delimited file format (e.g., CSV). The project includes functions to load the specification, generate a fixed-width file, and parse the file into a delimited format.
 
-This project consists of a Python script that reads a CSV file, anonymizes specific fields (first name, last name, and address) using SHA-256 hashing, and writes the anonymized data to a new CSV file. The script is designed to handle large datasets by processing the file in chunks.
+## Table of Contents
+- [Project Overview](#project-overview)
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Project Structure](#project-structure)
+- [License](#license)
 
-## Features
+## Project Overview
+The goal of this project is to:
+- Load a fixed-width file specification (column names, offsets, encodings, etc.) from a JSON file.
+- Use the specification to generate and parse fixed-width files.
+- Convert the fixed-width files to a delimited file format, such as CSV, while preserving data accuracy.
 
-- Reads a large CSV file in chunks to handle large datasets efficiently.
-- Anonymizes specified fields using SHA-256 hashing.
-- Writes the anonymized data to a new CSV file.
-
-## Requirements
-
-- Python 3.x
+## Prerequisites
+Before running this project, make sure you have the following:
+- Python 3.7 or higher
+- `json` and `csv` libraries (these are part of Python's standard library)
 
 ## Installation
-
-1. Clone this repository:
-    ```bash
-    git clone https://github.com/yourusername/your-repository.git
-    ```
+1. Clone this repository to your local machine:
+   ```bash
+   git clone https://github.com/your-username/fixed-width-parser.git
+   ```
 
 2. Navigate to the project directory:
-    ```bash
-    cd your-repository
-    ```
+   ```bash
+   cd fixed-width-parser
+   ```
 
-3. Install any necessary packages (if any):
-    ```bash
-    pip install -r requirements.txt
-    ```
+3. Install any required dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
 ## Usage
 
-1. Modify the file paths in `your_script.py`:
-    ```python
-    input_file = r'C:\path\to\your\input.csv'
-    output_file = r'C:\path\to\your\output.csv'
-    ```
+1. **Load the specification file:**
 
-2. Run the script:
-    ```bash
-    python your_script.py
-    ```
+   Update the file path for the `spec.json` file inside the script to match your local path.
+
+   ```python
+   spec_file_path = r'path_to_your_json_file'
+   ```
+
+2. **Generate a fixed-width file:**
+
+   You can generate a fixed-width file from data using the `generate_fixed_width_file` function:
+   ```python
+   generate_fixed_width_file(data, offsets, output_file, encoding)
+   ```
+
+3. **Parse a fixed-width file to CSV:**
+
+   Convert the fixed-width file into a delimited format using the `parse_fixed_width_file` function:
+   ```python
+   parse_fixed_width_file(input_file, output_file, column_names, offsets, fixed_width_encoding, include_header, delimited_encoding)
+   ```
+
+4. Update the file paths in the script where necessary to point to your fixed-width and CSV output files.
+
+## Project Structure
+- `spec.json`: Contains the column names, offsets, encodings, and settings for parsing the fixed-width file.
+- `fixed_width_parser.py`: The main script that loads the spec file, generates a fixed-width file, and parses the file to a CSV.
+- `requirements.txt`: Lists any additional libraries (if needed).
 
 ## Example
+You can find an example of the `spec.json` file below:
 
-To anonymize the data in `large_data.csv` and save the output to `anonymised_data.csv`, set the paths in the script accordingly and run it.
-
-## Contributing
-
-Feel free to submit issues or pull requests. Contributions are welcome!
+```json
+{
+    "ColumnNames": ["FirstName", "LastName", "ID", "State", "JobTitle", "Salary", "Email", "PhoneNumber", "Address", "Company"],
+    "Offsets": [5, 12, 3, 2, 13, 7, 10, 13, 20, 13],
+    "FixedWidthEncoding": "windows-1252",
+    "IncludeHeader": "True",
+    "DelimitedEncoding": "utf-8"
+}
+```
 
 ## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
